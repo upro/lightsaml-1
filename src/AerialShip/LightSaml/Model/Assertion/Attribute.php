@@ -169,12 +169,12 @@ class Attribute implements GetXmlInterface, LoadFromXmlInterface
         }
 
         for ($node = $xml->firstChild; $node !== NULL; $node = $node->nextSibling) {
-            if ($node->localName != 'AttributeValue') {
-                throw new InvalidXmlException('Expected AttributeValue but got '.$node->localName);
+            if ($node instanceof \DOMElement) {
+                if ($node->localName != 'AttributeValue') {
+                    throw new InvalidXmlException('Expected AttributeValue but got '.$node->localName);
+                }
+                $this->addValue($node->textContent);
             }
-            $this->addValue($node->textContent);
         }
     }
-
-
 }
